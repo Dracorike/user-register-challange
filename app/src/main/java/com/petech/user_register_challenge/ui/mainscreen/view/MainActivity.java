@@ -1,4 +1,4 @@
-package com.petech.user_register_challenge.ui;
+package com.petech.user_register_challenge.ui.mainscreen.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,4 +13,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+
 }
