@@ -33,7 +33,7 @@
     <string name="password_is_not_same">As senhas não batem.</string>
     <string name="nick_name_already_exists_error_message">Esse apelido já existe.</string>
     <string name="user_created_with_successful">Usuário Cadastrado com sucesso</string>
-    <string name="cpf_or_cnpj_alert_dialog_body">A conta a ser criado é do Tipo CNPJ?</string>
+    <string name="cpf_or_cnpj_alert_dialog_body">A conta a ser criado é do Tipo CPF?</string>
     <string name="yes_label">Sim</string>
     <string name="no_label">Não</string>
     <string name="cnpj_label">CNPJ</string>

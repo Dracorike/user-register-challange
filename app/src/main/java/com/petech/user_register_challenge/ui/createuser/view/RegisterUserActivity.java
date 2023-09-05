@@ -17,8 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class RegisterUserActivity extends AppCompatActivity {
     public static final String IS_CPF = "is-cpf";
     private ActivityRegisterUserBinding binding;
-    private NavController navController;
-    private RegisterUserViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +31,6 @@ public class RegisterUserActivity extends AppCompatActivity {
         NavHostFragment navFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_navigation_host);
 
-        navController = navFragment.getNavController();
+        NavController navController = navFragment.getNavController();
     }
 }

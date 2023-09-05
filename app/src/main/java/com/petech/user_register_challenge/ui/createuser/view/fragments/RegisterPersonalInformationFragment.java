@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.petech.user_register_challenge.R;
+import com.petech.user_register_challenge.data.entity.UserType;
 import com.petech.user_register_challenge.databinding.FragmentRegisterPersonalInformationBinding;
 import com.petech.user_register_challenge.ui.createuser.model.beans.UserPersonalInformation;
 import com.petech.user_register_challenge.ui.createuser.view.RegisterUserActivity;
@@ -37,6 +38,7 @@ public class RegisterPersonalInformationFragment extends Fragment {
     private RegisterUserViewModel viewModel;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private String imageUri = "";
+    private UserType userType = UserType.CPF;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,8 +75,10 @@ public class RegisterPersonalInformationFragment extends Fragment {
 
             if (isCpf) {
                 setupCpfField();
+                userType = UserType.CPF;
             } else {
                 setupCnjpField();
+                userType = UserType.CNPJ;
             }
         }
     }
@@ -109,6 +113,9 @@ public class RegisterPersonalInformationFragment extends Fragment {
                         .build());
             }
         });
+
+        binding.inputTextBornDateField.addTextChangedListener(MaskEditUtil
+                .mask(binding.inputTextBornDateField, MaskEditUtil.FORMAT_DATE));
     }
 
     private void setupObservables() {
@@ -130,6 +137,7 @@ public class RegisterPersonalInformationFragment extends Fragment {
         information.setCpfCnpj(binding.inputTextCpfCnpjField.getText().toString());
         information.setBornDate(parseDate(binding.inputTextBornDateField.getText().toString()));
         information.setGender(getGender());
+        information.setUserType(userType);
         return information;
     }
 
