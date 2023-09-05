@@ -17,18 +17,21 @@ import com.petech.user_register_challenge.data.entity.UserType;
 import com.petech.user_register_challenge.ui.createuser.model.RegisterUserModel;
 import com.petech.user_register_challenge.ui.createuser.model.beans.UserAccountInformation;
 import com.petech.user_register_challenge.ui.createuser.model.beans.UserPersonalInformation;
+import com.petech.user_register_challenge.utils.AppUtils;
 import com.petech.user_register_challenge.utils.ErrorMessages;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import retrofit2.Response;
 
 @HiltViewModel
 public class RegisterUserViewModel extends ViewModel {
-    private static final String TAG= "RegisterUserViewModel:";
+    private static final String TAG = "RegisterUserViewModel:";
     private MutableLiveData<ErrorMessages> error = new MutableLiveData();
     private MutableLiveData<Boolean> userPersonalInformationSuccess = new MutableLiveData();
     private MutableLiveData<Boolean> userCreationSuccess = new MutableLiveData();
@@ -52,21 +55,35 @@ public class RegisterUserViewModel extends ViewModel {
             return;
         }
         model.setUserAccountInformation(userAccountInformation);
+        new Thread(() -> {
+            try {
+                Response<Void> reponse = model.createNewUser(AppUtils
+                        .userEntityToDTO(model.getUserBuilded())).execute();
+                Log.i(TAG, "Response: " + reponse.message());
+                Log.i(TAG, "Response Code: " + reponse.code());
 
-        try {
-            long result = model.createUser();
+                if (reponse.isSuccessful()) {
+                    long result = model.createUser();
 
-            if (result == -1) {
+                    if (result == -1) {
+                        error.postValue(ErrorMessages.CREATION_ERROR);
+                        userCreationSuccess.postValue(false);
+                        return;
+                    }
+
+                    userCreationSuccess.postValue(true);
+                } else {
+                    error.postValue(ErrorMessages.NETWORK_ERROR);
+                }
+
+            } catch (SQLException exception) {
+                exception.printStackTrace();
                 error.postValue(ErrorMessages.CREATION_ERROR);
-                userCreationSuccess.postValue(false);
-                return;
+            } catch (IOException exception) {
+                exception.printStackTrace();
+                error.postValue(ErrorMessages.NETWORK_ERROR);
             }
-
-            userCreationSuccess.postValue(true);
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            error.postValue(ErrorMessages.CREATION_ERROR);
-        }
+        }).start();
     }
 
     private boolean validateAccountInformation(UserAccountInformation userAccountInformation) {

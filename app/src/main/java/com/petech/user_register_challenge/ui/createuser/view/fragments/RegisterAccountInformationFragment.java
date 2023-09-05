@@ -77,6 +77,9 @@ public class RegisterAccountInformationFragment extends Fragment {
             case NICKNAME_ALREADY_EXISTS:
                 showError(getString(R.string.nick_name_already_exists_error_message));
                 break;
+            case NETWORK_ERROR:
+                showError(getString(R.string.network_error_message));
+                break;
             default:
                 showError(getString(R.string.unknown_error));
         }

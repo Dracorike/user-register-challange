@@ -41,6 +41,7 @@ dependencies {
     def nav_version = "2.5.3"
     def androidXTestVersion = "1.5.0"
     def hilt_version = "2.44"
+    def retrofit_version = "2.9.0"
 
     //Navigation
     implementation "androidx.navigation:navigation-fragment:$nav_version"
@@ -49,6 +50,11 @@ dependencies {
     //Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     annotationProcessor "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation 'com.google.code.gson:gson:2.10.1'
 
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation 'androidx.appcompat:appcompat:1.6.1'
