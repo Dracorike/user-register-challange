@@ -6,19 +6,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class AppDatabaseHelper extends SQLiteOpenHelper {
-    private static final String BANK_NAME = "";
+    private static final String BANK_NAME = "user";
     private static final int BANK_VERSION = 1;
     public static final String TAG = "AppDatabaseHelper_TAG: ";
     public static final String USER_TABLE_NAME = "user";
 
-    public AppDatabaseHelper(Context context){
+    public AppDatabaseHelper(Context context) {
         super(context, BANK_NAME, null, BANK_VERSION);
         Log.i(TAG, "Init");
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String createTableUser = "CREATE TABLE IF NOT EXISTS user(" +
+        String createTableUser = "CREATE TABLE IF NOT EXISTS " + BANK_NAME + "(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name VARCHAR(255)," +
                 "password INTEGER," +

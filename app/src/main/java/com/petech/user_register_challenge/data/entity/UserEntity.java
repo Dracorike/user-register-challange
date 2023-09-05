@@ -6,15 +6,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 public class UserEntity implements Serializable {
-    public static final String ID_TAG = "PUT-ID-VALUE";
-    public static final String NAME_TAG = "PUT-NAME-VALUE";
-    public static final String PASSWORD_TAG = "PUT-PASSWORD-VALUE";
-    public static final String USER_IMAGE_TAG = "PUT-USER_IMAGE-VALUE";
-    public static final String ADDRESS_TAG = "PUT-ADDRESS-VALUE";
-    public static final String EMAIL_TAG = "PUT-EMAIL-VALUE";
-    public static final String BORN_DATE_TAG = "PUT-BORN_DATE-VALUE";
-    public static final String GENDER_TAG = "PUT-GENDER-VALUE";
-    public static final String CPF_CNJP_TAG = "PUT-CPF_CNJP-VALUE";
+    public static final String ID_TAG = "_id";
+    public static final String NAME_TAG = "name";
+    public static final String PASSWORD_TAG = "password";
+    public static final String USER_IMAGE_TAG = "user_image";
+    public static final String ADDRESS_TAG = "address";
+    public static final String EMAIL_TAG = "email";
+    public static final String BORN_DATE_TAG = "born_date";
+    public static final String GENDER_TAG = "gender";
+    public static final String CPF_CNJP_TAG = "cpfcnpj";
 
 
     private int _id;

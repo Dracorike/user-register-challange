@@ -27,7 +27,7 @@ public class UserDaoImpl implements UserDao {
     public long createUser(UserEntity user) {
         ContentValues contentUser = UserDaoUtil.getUserValues(user);
 
-        return database.insert(USER_TABLE_NAME, null, contentUser);
+        return database.insertOrThrow(USER_TABLE_NAME, null, contentUser);
     }
 
     @Override
