@@ -2,6 +2,8 @@ package com.petech.user_register_challenge.ui.mainscreen.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +27,14 @@ import com.petech.user_register_challenge.ui.updatescreen.view.UpdateActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class MainUserListFragment extends Fragment {
     private final List<UserEntity> usersList = new ArrayList();
+    private final List<UserEntity> userListFiltered = new ArrayList();
     private FragmentMainUserListBinding binding;
     private UserListRecyclerAdapter adapter;
     private MainViewModel viewModel;
@@ -41,15 +45,41 @@ public class MainUserListFragment extends Fragment {
         binding = FragmentMainUserListBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        setupRecyclerView();
+        setupComponents();
         setupObservables();
         viewModel.getAllUsers();
 
         return binding.getRoot();
     }
 
+    private void setupComponents() {
+        setupRecyclerView();
+        binding.editTextQueryUser.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                userListFiltered.clear();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                List<UserEntity> filtering = usersList.stream()
+                        .filter(user -> user.getName().contains(editable) || user.getNickName().contains(editable))
+                        .collect(Collectors.toList());
+
+                userListFiltered.clear();
+                userListFiltered.addAll(filtering);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
     private void setupRecyclerView() {
-        adapter = new UserListRecyclerAdapter(usersList, deleteUserClick(), moreDetailsClick());
+        adapter = new UserListRecyclerAdapter(userListFiltered, deleteUserClick(), moreDetailsClick());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         binding.recyclerViewUserList.setLayoutManager(layoutManager);
@@ -60,6 +90,7 @@ public class MainUserListFragment extends Fragment {
         viewModel.getUsersList().observe(getViewLifecycleOwner(), list -> {
             usersList.clear();
             usersList.addAll(list);
+            userListFiltered.addAll(usersList);
 
             adapter.notifyDataSetChanged();
         });

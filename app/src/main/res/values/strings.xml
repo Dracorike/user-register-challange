@@ -43,4 +43,5 @@
     <string name="select_a_picture_error">Selecione uma foto.</string>
     <string name="user_updated_with_success">Usuário Atualizado com Sucesso!</string>
     <string name="network_error_message">Houver algum erro relacionado a internet.</string>
+    <string name="query_user_hint">Procurar usuário</string>
 </resources>
