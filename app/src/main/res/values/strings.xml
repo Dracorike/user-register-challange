@@ -27,4 +27,10 @@
     <string name="repeat_password_hint_label">Confime a sua senha.</string>
     <string name="create_user_button_label">Criar Conta</string>
     <string name="create_user_title">Agora vamos criar seu metodo de acesso.</string>
+    <string name="unknown_error">Error Desconhecido!</string>
+    <string name="something_wrong_when_you_cadastrate">Houve Algum erro ao tentar te cadastrar.</string>
+    <string name="invalid_password_message">Sua senha é inválida!</string>
+    <string name="password_is_not_same">As senhas não batem.</string>
+    <string name="nick_name_already_exists_error_message">Esse apelido já existe.</string>
+    <string name="user_created_with_successful">Usuário Cadastrado com sucesso</string>
 </resources>

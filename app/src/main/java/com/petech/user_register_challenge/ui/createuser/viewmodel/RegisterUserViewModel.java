@@ -56,8 +56,11 @@ public class RegisterUserViewModel extends ViewModel {
 
             if (result == -1) {
                 error.postValue(ErrorMessages.CREATION_ERROR);
+                userCreationSuccess.postValue(false);
+                return;
             }
 
+            userCreationSuccess.postValue(true);
         } catch (SQLException exception) {
             exception.printStackTrace();
             error.postValue(ErrorMessages.CREATION_ERROR);
@@ -151,7 +154,7 @@ public class RegisterUserViewModel extends ViewModel {
         return userPersonalInformationSuccess;
     }
 
-    private LiveData<Boolean> getUserCreationSuccess() {
+    public LiveData<Boolean> getUserCreationSuccess() {
         return userCreationSuccess;
     }
 
