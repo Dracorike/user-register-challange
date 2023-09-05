@@ -14,11 +14,16 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.qualifiers.ApplicationContext;
+
 public class UserDaoImpl implements UserDao {
     private AppDatabaseHelper helper;
     private SQLiteDatabase database;
 
-    public UserDaoImpl(Context context) {
+    @Inject
+    public UserDaoImpl(@ApplicationContext Context context) {
         helper = new AppDatabaseHelper(context);
         database = helper.getWritableDatabase();
     }
@@ -31,10 +36,10 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateUser(UserEntity user) {
+    public int updateUser(UserEntity user) {
         ContentValues contentUser = UserDaoUtil.getUserValues(user);
 
-        database.update(
+        return database.update(
                 USER_TABLE_NAME,
                 contentUser,
                 "_id = ?",
@@ -43,8 +48,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteUser(UserEntity user) {
-        database.delete(
+    public int deleteUser(UserEntity user) {
+        return database.delete(
                 USER_TABLE_NAME,
                 "_id = ?",
                 new String[]{Integer.toString(user.get_id())}
@@ -84,6 +89,11 @@ public class UserDaoImpl implements UserDao {
         }
 
         return usersList;
+    }
+
+    @Override
+    public void closeDatabase() {
+        database.close();
     }
 
 
