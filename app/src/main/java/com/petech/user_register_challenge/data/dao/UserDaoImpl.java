@@ -82,15 +82,12 @@ public class UserDaoImpl implements UserDao {
         List<UserEntity> usersList = new ArrayList();
 
         while (cursor.moveToNext()) {
-            byte[] baseDecoded = Base64.getDecoder().decode(cursor.getString(4));
-            String baseString = new String(baseDecoded);
-
             UserEntity userItem = new UserEntity.Builder()
                     .id(cursor.getInt(0))
                     .name(cursor.getString(1))
                     .nickName(cursor.getString(2))
                     .password(cursor.getInt(3))
-                    .userImage(baseString)
+                    .userImage(cursor.getString(4))
                     .address(cursor.getString(5))
                     .email(cursor.getString(6))
                     .bornDate(UserDaoUtil.convertStringIso8601ToLocalDate(cursor.getString(7)))

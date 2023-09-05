@@ -75,6 +75,7 @@ public class MainUserListFragment extends Fragment {
             @Override
             public void onDeleteClickListener(int userId) {
                 viewModel.deleteUser(userId);
+                requireActivity().recreate();
             }
         };
     }

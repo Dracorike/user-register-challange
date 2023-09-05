@@ -37,9 +37,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        viewModel.hasUserRegistered();
         setupComponents();
         setObservables();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewModel.hasUserRegistered();
     }
 
     private void setupComponents() {
