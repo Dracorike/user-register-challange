@@ -11,4 +11,5 @@ public interface UserDao {
     List<UserEntity> getAllUsers();
     void closeDatabase();
     List<UserEntity> findUserByNickName(String nickName);
+    UserEntity findUserById(int userId);
 }

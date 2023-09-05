@@ -123,15 +123,12 @@ public class UserDaoImpl implements UserDao {
 
 
         while (cursor.moveToNext()) {
-            byte[] baseDecoded = Base64.getDecoder().decode(cursor.getString(4));
-            String baseString = new String(baseDecoded);
-
             UserEntity userItem = new UserEntity.Builder()
                     .id(cursor.getInt(0))
                     .name(cursor.getString(1))
                     .nickName(cursor.getString(2))
                     .password(cursor.getInt(3))
-                    .userImage(baseString)
+                    .userImage(cursor.getString(4))
                     .address(cursor.getString(5))
                     .email(cursor.getString(6))
                     .bornDate(UserDaoUtil.convertStringIso8601ToLocalDate(cursor.getString(7)))
@@ -143,6 +140,42 @@ public class UserDaoImpl implements UserDao {
         }
 
         return usersList;
+    }
+
+    @Override
+    public UserEntity findUserById(int userId) {
+        String selection = "_id = ?";
+        String[] selectionArgs = {String.valueOf(userId)};
+        Cursor cursor = database.query(
+                USER_TABLE_NAME,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        List<UserEntity> usersList = new ArrayList();
+
+
+        while (cursor.moveToNext()) {
+            UserEntity userItem = new UserEntity.Builder()
+                    .id(cursor.getInt(0))
+                    .name(cursor.getString(1))
+                    .nickName(cursor.getString(2))
+                    .password(cursor.getInt(3))
+                    .userImage(cursor.getString(4))
+                    .address(cursor.getString(5))
+                    .email(cursor.getString(6))
+                    .bornDate(UserDaoUtil.convertStringIso8601ToLocalDate(cursor.getString(7)))
+                    .gender(cursor.getInt(8) == 1)
+                    .cpfCnpj(cursor.getString(9))
+                    .build();
+
+            usersList.add(userItem);
+        }
+
+        return usersList.get(0);
     }
 
 

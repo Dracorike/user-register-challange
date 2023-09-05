@@ -1,5 +1,6 @@
 package com.petech.user_register_challenge.ui.mainscreen.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.petech.user_register_challenge.databinding.FragmentMainUserListBindin
 import com.petech.user_register_challenge.ui.mainscreen.viewmodel.MainViewModel;
 import com.petech.user_register_challenge.ui.recyclerview.userlist.UserListRecyclerAdapter;
 import com.petech.user_register_challenge.ui.recyclerview.userlist.listener.DeleteOnClickListener;
+import com.petech.user_register_challenge.ui.recyclerview.userlist.listener.MoreDetailsOnClickListener;
+import com.petech.user_register_challenge.ui.updatescreen.view.UpdateActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +49,7 @@ public class MainUserListFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        adapter = new UserListRecyclerAdapter(usersList, deleteUserClick());
+        adapter = new UserListRecyclerAdapter(usersList, deleteUserClick(), moreDetailsClick());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         binding.recyclerViewUserList.setLayoutManager(layoutManager);
@@ -76,6 +79,17 @@ public class MainUserListFragment extends Fragment {
             public void onDeleteClickListener(int userId) {
                 viewModel.deleteUser(userId);
                 requireActivity().recreate();
+            }
+        };
+    }
+
+    private MoreDetailsOnClickListener moreDetailsClick() {
+        return new MoreDetailsOnClickListener() {
+            @Override
+            public void onClickMoreDetailsListener(int userId) {
+                Intent intent = new Intent(requireActivity(), UpdateActivity.class);
+                intent.putExtra(UpdateActivity.EXTRA_ID, userId);
+                startActivity(intent);
             }
         };
     }
