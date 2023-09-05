@@ -45,4 +45,12 @@ public class UserDaoImplTest {
 
         assertEquals(local.toString(), "2023-09-05");
     }
+
+    @Test
+    public void testPasswordHashCode() {
+        int hash1 = "123456".hashCode();
+        int hash2 = "123456".hashCode();
+
+        assertEquals(hash1, hash2);
+    }
 }

@@ -3,17 +3,23 @@ package com.petech.user_register_challenge.ui.createuser.viewmodel;
 import static com.petech.user_register_challenge.utils.AppUtils.VALID_CNPJ_REGEX;
 import static com.petech.user_register_challenge.utils.AppUtils.VALID_CPF_REGEX;
 import static com.petech.user_register_challenge.utils.AppUtils.VALID_EMAIL_ADDRESS_REGEX;
+import static com.petech.user_register_challenge.utils.AppUtils.VALID_PASSWORD;
+
+import android.database.SQLException;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.petech.user_register_challenge.data.entity.UserEntity;
 import com.petech.user_register_challenge.data.entity.UserType;
 import com.petech.user_register_challenge.ui.createuser.model.RegisterUserModel;
+import com.petech.user_register_challenge.ui.createuser.model.beans.UserAccountInformation;
 import com.petech.user_register_challenge.ui.createuser.model.beans.UserPersonalInformation;
 import com.petech.user_register_challenge.utils.ErrorMessages;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,6 +29,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class RegisterUserViewModel extends ViewModel {
     private MutableLiveData<ErrorMessages> error = new MutableLiveData();
     private MutableLiveData<Boolean> userPersonalInformationSuccess = new MutableLiveData();
+    private MutableLiveData<Boolean> userCreationSuccess = new MutableLiveData();
     private RegisterUserModel model;
 
     @Inject
@@ -38,6 +45,54 @@ public class RegisterUserViewModel extends ViewModel {
         userPersonalInformationSuccess.postValue(true);
     }
 
+    public void createNewUser(UserAccountInformation userAccountInformation) {
+        if (validateAccountInformation(userAccountInformation)) {
+            return;
+        }
+        model.setUserAccountInformation(userAccountInformation);
+
+        try {
+            long result = model.createUser();
+
+            if (result == -1) {
+                error.postValue(ErrorMessages.CREATION_ERROR);
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            error.postValue(ErrorMessages.CREATION_ERROR);
+        }
+    }
+
+    private boolean validateAccountInformation(UserAccountInformation userAccountInformation) {
+        return !hasNickNameOnDataBank(userAccountInformation.getNickName()) ||
+                validatePassword(userAccountInformation.getPassword(), userAccountInformation.getConfirmPassword());
+    }
+
+    private boolean hasNickNameOnDataBank(String nickName) {
+        List<UserEntity> users = model.findUserByNickName(nickName);
+        boolean validate = users.size() > 0;
+
+        if (validate) {
+            error.postValue(ErrorMessages.NICKNAME_ALREADY_EXISTS);
+        }
+        return validate;
+    }
+
+    private boolean validatePassword(String password, String confirmPassword) {
+        if (!password.equals(confirmPassword)) {
+            error.postValue(ErrorMessages.PASSWORD_NOT_SAME);
+            return false;
+        }
+        boolean validation = VALID_PASSWORD.matcher(password).matches();
+
+        if (!validation) {
+            error.postValue(ErrorMessages.PASSWORD_INVALID_ERROR);
+        }
+
+        return validation;
+    }
+
     private boolean validateUserInformation(UserPersonalInformation information) {
         return validateEmail(information.getEmail()) ||
                 validateName(information.getName()) ||
@@ -46,13 +101,20 @@ public class RegisterUserViewModel extends ViewModel {
     }
 
     private boolean validateCpfCnpj(String data, UserType userType) {
+        boolean validation;
         if (userType == UserType.CPF) {
-            return VALID_CPF_REGEX.matcher(data).matches();
+            validation = VALID_CPF_REGEX.matcher(data).matches();
         } else if (userType == UserType.CNPJ) {
-            return VALID_CNPJ_REGEX.matcher(data).matches();
+            validation = VALID_CNPJ_REGEX.matcher(data).matches();
         } else {
-            return false;
+            validation = false;
         }
+
+        if (!validation) {
+            error.postValue(ErrorMessages.CPF_CNPJ_ERROR);
+        }
+
+        return validation;
     }
 
     private boolean validateName(String name) {
@@ -89,5 +151,8 @@ public class RegisterUserViewModel extends ViewModel {
         return userPersonalInformationSuccess;
     }
 
+    private LiveData<Boolean> getUserCreationSuccess() {
+        return userCreationSuccess;
+    }
 
 }

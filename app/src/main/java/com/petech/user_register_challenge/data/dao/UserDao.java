@@ -10,4 +10,5 @@ public interface UserDao {
     int deleteUser(int userId);
     List<UserEntity> getAllUsers();
     void closeDatabase();
+    List<UserEntity> findUserByNickName(String nickName);
 }

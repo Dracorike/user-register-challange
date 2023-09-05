@@ -7,6 +7,8 @@ import com.petech.user_register_challenge.data.entity.UserEntity;
 import com.petech.user_register_challenge.ui.createuser.model.beans.UserAccountInformation;
 import com.petech.user_register_challenge.ui.createuser.model.beans.UserPersonalInformation;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 public class RegisterUserModelImpl implements RegisterUserModel {
@@ -36,10 +38,15 @@ public class RegisterUserModelImpl implements RegisterUserModel {
     }
 
     @Override
-    public void serUserAccountInformation(UserAccountInformation accountInformation) {
+    public void setUserAccountInformation(UserAccountInformation accountInformation) {
         getUserSingleton()
                 .nickName(accountInformation.getNickName())
                 .password(accountInformation.getPassword());
+    }
+
+    @Override
+    public List<UserEntity> findUserByNickName(String nickName) {
+        return userDao.findUserByNickName(nickName);
     }
 
     public static UserEntity.Builder getUserSingleton() {
