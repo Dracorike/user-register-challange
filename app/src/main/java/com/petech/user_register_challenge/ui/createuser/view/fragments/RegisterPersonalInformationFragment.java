@@ -99,6 +99,10 @@ public class RegisterPersonalInformationFragment extends Fragment {
         binding.buttonNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (imageUri.equals("")) {
+                    showError(getString(R.string.select_a_picture_error));
+                    return;
+                }
                 viewModel.setUserPersonalInformation(getFieldsValues());
             }
         });
@@ -120,9 +124,7 @@ public class RegisterPersonalInformationFragment extends Fragment {
         viewModel.getError().observe(getViewLifecycleOwner(), it -> handleError(it));
 
         viewModel.getUserPersonalInformationSuccess().observe(getViewLifecycleOwner(), it -> {
-            if (it) {
-                Navigation.findNavController(requireView()).navigate(R.id.step_two_action);
-            }
+            Navigation.findNavController(requireView()).navigate(R.id.step_two_action);
         });
     }
 

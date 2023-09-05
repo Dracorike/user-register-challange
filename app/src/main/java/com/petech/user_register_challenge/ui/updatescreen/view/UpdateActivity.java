@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
@@ -64,6 +65,13 @@ public class UpdateActivity extends AppCompatActivity {
 
     private void setObservables() {
         viewModel.getUser().observe(this, this::fillFields);
+
+        viewModel.isSuccessUpdate().observe(this, it -> {
+            if (it != null) {
+                Toast.makeText(getBaseContext(), R.string.user_updated_with_success, Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
     }
 
     private void setupComponents(UserEntity user) {
@@ -85,6 +93,15 @@ public class UpdateActivity extends AppCompatActivity {
                 viewModel.updateUser(getFieldsValues(user));
             }
         });
+
+        binding.imageUserPhotoPickerUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickMedia.launch(new PickVisualMediaRequest.Builder()
+                        .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                        .build());
+            }
+        });
     }
 
     private void fillFields(UserEntity user) {
@@ -96,6 +113,7 @@ public class UpdateActivity extends AppCompatActivity {
         binding.inputTextAddressFieldUpdate.setText(user.getAddress());
         binding.inputTextEmailAddressFieldUpdate.setText(user.getEmail());
         binding.textInputBornDateFieldUpdate.setText(user.getBornDate().format(formatters));
+        binding.inputTextCpfCnpjFieldUpdate.setText(user.getCpfCnpj());
         if (user.isGender()) {
             binding.radioButtonManUpdate.toggle();
         } else {
@@ -122,6 +140,7 @@ public class UpdateActivity extends AppCompatActivity {
                 .email(binding.inputTextEmailAddressFieldUpdate.getText().toString())
                 .bornDate(parseDate(binding.textInputBornDateFieldUpdate.getText().toString()))
                 .gender(getGender())
+                .cpfCnpj(binding.inputTextCpfCnpjFieldUpdate.getText().toString())
                 .build();
     }
 

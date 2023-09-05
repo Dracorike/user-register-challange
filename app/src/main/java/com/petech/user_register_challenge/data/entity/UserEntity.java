@@ -28,7 +28,7 @@ public class UserEntity implements Serializable {
     private String cpfCnpj;
 
     public UserType userType() {
-        if (cpfCnpj.length() > 11) {
+        if (cpfCnpj.length() > 14) {//108.223.674-83
             return UserType.CNPJ;
         } else {
             return UserType.CPF;

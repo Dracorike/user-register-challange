@@ -40,4 +40,6 @@
     <string name="cnpj_example_hint">12.345.678/0002-00</string>
     <string name="new_user_label">Novo Usuário</string>
     <string name="update_button_label">Atualizar</string>
+    <string name="select_a_picture_error">Selecione uma foto.</string>
+    <string name="user_updated_with_success">Usuário Atualizado com Sucesso!</string>
 </resources>

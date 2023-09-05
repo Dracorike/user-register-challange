@@ -41,8 +41,7 @@
                 android:id="@+id/input_text_name_field_update"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/name_label"
-                android:inputType="textPassword" />
+                android:hint="@string/name_label" />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/text_nick_name_label"
@@ -64,8 +63,7 @@
                 android:id="@+id/input_text_nick_name_field_update"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/nick_name_hint_label"
-                android:inputType="textPassword" />
+                android:hint="@string/nick_name_hint_label"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -87,8 +85,7 @@
                 android:id="@+id/input_text_address_field_update"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/address_example_hint"
-                android:inputType="textPassword" />
+                android:hint="@string/address_example_hint" />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/text_email_address_label"
@@ -109,8 +106,7 @@
                 android:id="@+id/input_text_email_address_field_update"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/persona_email_label"
-                android:inputType="textPassword" />
+                android:hint="@string/persona_email_label" />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -130,8 +126,7 @@
                 android:id="@+id/text_input_born_date_field_update"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/born_date_example"
-                android:inputType="textPassword" />
+                android:hint="@string/born_date_example" />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:layout_width="wrap_content"
@@ -151,8 +146,7 @@
                 android:id="@+id/input_text_cpf_cnpj_field_update"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="@string/cpf_example_hint"
-                android:inputType="textPassword" />
+                android:hint="@string/cpf_example_hint" />
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/text_user_gender_input_label_update"
