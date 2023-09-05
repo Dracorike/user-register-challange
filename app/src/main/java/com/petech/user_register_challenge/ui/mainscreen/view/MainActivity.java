@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.petech.user_register_challenge.R;
 import com.petech.user_register_challenge.data.dao.UserDao;
@@ -14,6 +16,7 @@ import com.petech.user_register_challenge.data.dao.UserDaoImpl;
 import com.petech.user_register_challenge.data.dao.UserDaoUtil;
 import com.petech.user_register_challenge.data.entity.UserEntity;
 import com.petech.user_register_challenge.databinding.ActivityMainBinding;
+import com.petech.user_register_challenge.ui.createuser.view.RegisterUserActivity;
 import com.petech.user_register_challenge.ui.mainscreen.viewmodel.MainViewModel;
 
 import java.time.LocalDate;
@@ -33,7 +36,17 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         viewModel.hasUserRegistered();
+        setupComponents();
         setObservables();
+    }
+
+    private void setupComponents() {
+        binding.floatingButtonAddNewUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getBaseContext(), RegisterUserActivity.class));
+            }
+        });
     }
 
     private void setObservables() {

@@ -3,11 +3,14 @@ package com.petech.user_register_challenge;
 
 import static org.junit.Assert.assertEquals;
 
+import android.util.Log;
+
 import com.petech.user_register_challenge.data.dao.UserDaoUtil;
 
 import org.junit.Test;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class UserDaoImplTest {
 
@@ -33,5 +36,13 @@ public class UserDaoImplTest {
         LocalDate dateResult = UserDaoUtil.convertStringIso8601ToLocalDate(localDateString);
 
         assertEquals(dateResult, date);
+    }
+
+    @Test
+    public void convertToDate() {
+        DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate local = LocalDate.parse("05/09/2023", formatters);
+
+        assertEquals(local.toString(), "2023-09-05");
     }
 }

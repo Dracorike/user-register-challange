@@ -16,4 +16,7 @@
     <string name="woman_label">Mulher</string>
     <string name="gender_label">Genero</string>
     <string name="continue_button_label">Continuar</string>
+    <string name="email_invalid_error_message">O Email informado é inválido.</string>
+    <string name="name_very_shot_error_message">É necessário que o nome de usuário tenha mais de 30 caracteres.</string>
+    <string name="minor_eighteen_error_message">O usuário deve ser maior de 18 anos.</string>
 </resources>

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/register_user_navigation">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register_user_navigation"
+    app:startDestination="@id/registerPersonalInformationFragment">
 
+    <fragment
+        android:id="@+id/registerPersonalInformationFragment"
+        android:name="com.petech.user_register_challenge.ui.createuser.view.fragments.RegisterPersonalInformationFragment"
+        android:label="RegisterPersonalInformationFragment"
+        tools:layout="@layout/fragment_register_personal_information"/>
 </navigation>
