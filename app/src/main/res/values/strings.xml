@@ -19,4 +19,12 @@
     <string name="email_invalid_error_message">O Email informado é inválido.</string>
     <string name="name_very_shot_error_message">É necessário que o nome de usuário tenha mais de 30 caracteres.</string>
     <string name="minor_eighteen_error_message">O usuário deve ser maior de 18 anos.</string>
+    <string name="nick_name_label">Apelido</string>
+    <string name="nick_name_hint_label">Apelido do usuário</string>
+    <string name="password_label">Senha</string>
+    <string name="password_hint_label">Sua senha de 8 digitos</string>
+    <string name="repeat_password_label">Repita a senha</string>
+    <string name="repeat_password_hint_label">Confime a sua senha.</string>
+    <string name="create_user_button_label">Criar Conta</string>
+    <string name="create_user_title">Agora vamos criar seu metodo de acesso.</string>
 </resources>

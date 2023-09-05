@@ -1,5 +1,7 @@
 package com.petech.user_register_challenge.ui.createuser.model.beans;
 
+import com.petech.user_register_challenge.data.entity.UserType;
+
 import java.time.LocalDate;
 
 public class UserPersonalInformation {
@@ -10,6 +12,15 @@ public class UserPersonalInformation {
     private LocalDate bornDate;
     private boolean gender;
     private String cpfCnpj;
+    private UserType userType;
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
 
     public String getUserImage() {
         return userImage;

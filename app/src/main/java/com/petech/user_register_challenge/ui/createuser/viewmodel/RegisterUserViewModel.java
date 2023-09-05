@@ -1,11 +1,14 @@
 package com.petech.user_register_challenge.ui.createuser.viewmodel;
 
+import static com.petech.user_register_challenge.utils.AppUtils.VALID_CNPJ_REGEX;
+import static com.petech.user_register_challenge.utils.AppUtils.VALID_CPF_REGEX;
 import static com.petech.user_register_challenge.utils.AppUtils.VALID_EMAIL_ADDRESS_REGEX;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.petech.user_register_challenge.data.entity.UserType;
 import com.petech.user_register_challenge.ui.createuser.model.RegisterUserModel;
 import com.petech.user_register_challenge.ui.createuser.model.beans.UserPersonalInformation;
 import com.petech.user_register_challenge.utils.ErrorMessages;
@@ -36,7 +39,20 @@ public class RegisterUserViewModel extends ViewModel {
     }
 
     private boolean validateUserInformation(UserPersonalInformation information) {
-        return validateEmail(information.getEmail()) || validateName(information.getName()) || validateBornDate(information.getBornDate());
+        return validateEmail(information.getEmail()) ||
+                validateName(information.getName()) ||
+                validateBornDate(information.getBornDate()) ||
+                validateCpfCnpj(information.getCpfCnpj(), information.getUserType());
+    }
+
+    private boolean validateCpfCnpj(String data, UserType userType) {
+        if (userType == UserType.CPF) {
+            return VALID_CPF_REGEX.matcher(data).matches();
+        } else if (userType == UserType.CNPJ) {
+            return VALID_CNPJ_REGEX.matcher(data).matches();
+        } else {
+            return false;
+        }
     }
 
     private boolean validateName(String name) {
