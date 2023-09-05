@@ -11,6 +11,7 @@ public class UserDaoUtil {
     public static ContentValues getUserValues(UserEntity user) {
         ContentValues values = new ContentValues();
         values.put(UserEntity.NAME_TAG, user.getName());
+        values.put(UserEntity.NICK_TAG, user.getNickName());
         values.put(UserEntity.PASSWORD_TAG, user.getPassword());
         values.put(UserEntity.USER_IMAGE_TAG, user.getUserImage());
         values.put(UserEntity.ADDRESS_TAG, user.getAddress());

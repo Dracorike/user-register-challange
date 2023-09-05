@@ -1,6 +1,7 @@
 package com.petech.user_register_challenge.ui.mainscreen.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -30,15 +31,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        selectFragment();
 
-        viewModel.createNewUser();
+        viewModel.hasUserRegistered();
+        setObservables();
     }
 
-    private void selectFragment() {
+    private void setObservables() {
+        viewModel.getHasUserRegistered().observe(this, hasUsers -> {
+            if (hasUsers) {
+                selectFragment(new MainUserListFragment());
+            } else {
+                selectFragment(new MainEmptyListFragment());
+            }
+        });
+    }
+
+    private void selectFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.frame_fragment_container, new MainEmptyListFragment());
+        transaction.replace(R.id.frame_fragment_container, fragment);
         transaction.commit();
     }
 

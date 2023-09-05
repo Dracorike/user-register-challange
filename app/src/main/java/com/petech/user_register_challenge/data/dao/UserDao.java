@@ -7,7 +7,7 @@ import java.util.List;
 public interface UserDao {
     long createUser(UserEntity user);
     int updateUser(UserEntity user);
-    int deleteUser(UserEntity user);
+    int deleteUser(int userId);
     List<UserEntity> getAllUsers();
     void closeDatabase();
 }

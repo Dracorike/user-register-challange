@@ -7,7 +7,7 @@ import java.util.List;
 public interface MainBusinessModel {
     long createNewUser(UserEntity newUser);
     int updateUser(UserEntity user);
-    int deleteUser(UserEntity user);
+    int deleteUser(int userId);
     List<UserEntity> getAllUsers();
     void closeDatabase();
 }

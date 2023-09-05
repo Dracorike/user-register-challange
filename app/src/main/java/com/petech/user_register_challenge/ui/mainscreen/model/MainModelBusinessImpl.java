@@ -33,8 +33,8 @@ public class MainModelBusinessImpl implements MainBusinessModel {
     }
 
     @Override
-    public int deleteUser(UserEntity user) {
-        return userDao.deleteUser(user);
+    public int deleteUser(int userId) {
+        return userDao.deleteUser(userId);
     }
 
     @Override

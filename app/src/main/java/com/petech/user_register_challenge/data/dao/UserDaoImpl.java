@@ -48,11 +48,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int deleteUser(UserEntity user) {
+    public int deleteUser(int userId) {
         return database.delete(
                 USER_TABLE_NAME,
                 "_id = ?",
-                new String[]{Integer.toString(user.get_id())}
+                new String[]{Integer.toString(userId)}
         );
     }
 
@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
     public List<UserEntity> getAllUsers() {
         Cursor cursor = database.query(
                 USER_TABLE_NAME,
-                new String[]{"_id", "name", "password", "user_image", "address", "email", "born_date", "gender", "cpfcnpj"},
+                new String[]{"_id", "name", "nick_name", "password", "user_image", "address", "email", "born_date", "gender", "cpfcnpj"},
                 null,
                 null,
                 null,
@@ -70,19 +70,20 @@ public class UserDaoImpl implements UserDao {
         List<UserEntity> usersList = new ArrayList();
 
         while (cursor.moveToNext()) {
-            byte[] baseDecoded = Base64.getDecoder().decode(cursor.getString(3));
+            byte[] baseDecoded = Base64.getDecoder().decode(cursor.getString(4));
             String baseString = new String(baseDecoded);
 
             UserEntity userItem = new UserEntity.Builder()
                     .id(cursor.getInt(0))
                     .name(cursor.getString(1))
-                    .password(cursor.getInt(2))
+                    .nickName(cursor.getString(2))
+                    .password(cursor.getInt(3))
                     .userImage(baseString)
-                    .address(cursor.getString(4))
-                    .email(cursor.getString(5))
-                    .bornDate(UserDaoUtil.convertStringIso8601ToLocalDate(cursor.getString(6)))
-                    .gender(cursor.getInt(7) == 1)
-                    .cpfCnpj(cursor.getString(8))
+                    .address(cursor.getString(5))
+                    .email(cursor.getString(6))
+                    .bornDate(UserDaoUtil.convertStringIso8601ToLocalDate(cursor.getString(7)))
+                    .gender(cursor.getInt(8) == 1)
+                    .cpfCnpj(cursor.getString(9))
                     .build();
 
             usersList.add(userItem);

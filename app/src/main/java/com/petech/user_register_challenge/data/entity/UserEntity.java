@@ -1,13 +1,12 @@
 package com.petech.user_register_challenge.data.entity;
 
-import android.util.Base64;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 
 public class UserEntity implements Serializable {
     public static final String ID_TAG = "_id";
     public static final String NAME_TAG = "name";
+    public static final String NICK_TAG = "nick_name";
     public static final String PASSWORD_TAG = "password";
     public static final String USER_IMAGE_TAG = "user_image";
     public static final String ADDRESS_TAG = "address";
@@ -19,6 +18,7 @@ public class UserEntity implements Serializable {
 
     private int _id;
     private String name;
+    private String nickName;
     private int password; //TODO: Lembre-se, isso é um hash
     private String userImage;
     private String address;
@@ -35,9 +35,10 @@ public class UserEntity implements Serializable {
         }
     }
 
-    public UserEntity(int _id, String name, int password, String userImage, String address, String email, LocalDate bornDate, boolean gender, String cpfCnpj) {
+    public UserEntity(int _id, String name, String nickName, int password, String userImage, String address, String email, LocalDate bornDate, boolean gender, String cpfCnpj) {
         this._id = _id;
         this.name = name;
+        this.nickName = nickName;
         this.password = password;
         this.userImage = userImage;
         this.address = address;
@@ -45,6 +46,14 @@ public class UserEntity implements Serializable {
         this.bornDate = bornDate;
         this.gender = gender;
         this.cpfCnpj = cpfCnpj;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public int get_id() {
@@ -122,6 +131,7 @@ public class UserEntity implements Serializable {
     public static class Builder {
         private int _id;
         private String name;
+        private String nickName;
         private int password; //TODO: Lembre-se, isso é um hash
         private String userImage;
         private String address;
@@ -129,6 +139,11 @@ public class UserEntity implements Serializable {
         private LocalDate bornDate;
         private boolean gender;
         private String cpfCnpj;
+
+        public Builder nickName(String nickName) {
+            this.nickName = nickName;
+            return this;
+        }
 
         public Builder id(int _id) {
             this._id = _id;
@@ -179,6 +194,7 @@ public class UserEntity implements Serializable {
             return new UserEntity(
                     this._id,
                     this.name,
+                    this.nickName,
                     this.password,
                     this.userImage,
                     this.address,

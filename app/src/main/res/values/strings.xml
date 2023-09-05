@@ -2,4 +2,18 @@
     <string name="app_name">User Register Challenge</string>
     <string name="no_user_registered_yet_label">Ainda não há nenhum usuário cadastrado.</string>
     <string name="no_user_image_content_description">Imagem: Sem usuários</string>
+    <string name="item_not_deleted_error_body">O Item NÃO foi deletado com sucesso.</string>
+    <string name="name_label">Nome</string>
+    <string name="email_label">Email</string>
+    <string name="persona_email_label">E-mail pessoal</string>
+    <string name="address_label">Endereço</string>
+    <string name="address_example_hint">R. Aprigio Francisco Maciel, n°12</string>
+    <string name="born_date_label">Data de nascimento</string>
+    <string name="born_date_example">10/02/1995</string>
+    <string name="cpf_example_hint">123.456.789-12</string>
+    <string name="cpf_label">CPF</string>
+    <string name="man_label">Homem</string>
+    <string name="woman_label">Mulher</string>
+    <string name="gender_label">Genero</string>
+    <string name="continue_button_label">Continuar</string>
 </resources>

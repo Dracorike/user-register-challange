@@ -21,6 +21,7 @@ public class AppDatabaseHelper extends SQLiteOpenHelper {
         String createTableUser = "CREATE TABLE IF NOT EXISTS " + BANK_NAME + "(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name VARCHAR(255)," +
+                "nick_name VARCHAR(255)," +
                 "password INTEGER," +
                 "user_image VARCHAR(255)," +
                 "address VARCHAR(255)," +
