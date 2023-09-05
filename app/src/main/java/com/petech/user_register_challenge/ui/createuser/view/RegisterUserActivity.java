@@ -4,17 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.petech.user_register_challenge.R;
 import com.petech.user_register_challenge.databinding.ActivityRegisterUserBinding;
+import com.petech.user_register_challenge.ui.createuser.viewmodel.RegisterUserViewModel;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class RegisterUserActivity extends AppCompatActivity {
+    public static final String IS_CPF = "is-cpf";
     private ActivityRegisterUserBinding binding;
     private NavController navController;
+    private RegisterUserViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

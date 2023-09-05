@@ -6,6 +6,7 @@ import static com.petech.user_register_challenge.utils.AppUtils.VALID_EMAIL_ADDR
 import static com.petech.user_register_challenge.utils.AppUtils.VALID_PASSWORD;
 
 import android.database.SQLException;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -27,6 +28,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class RegisterUserViewModel extends ViewModel {
+    private static final String TAG= "RegisterUserViewModel:";
     private MutableLiveData<ErrorMessages> error = new MutableLiveData();
     private MutableLiveData<Boolean> userPersonalInformationSuccess = new MutableLiveData();
     private MutableLiveData<Boolean> userCreationSuccess = new MutableLiveData();
@@ -46,7 +48,7 @@ public class RegisterUserViewModel extends ViewModel {
     }
 
     public void createNewUser(UserAccountInformation userAccountInformation) {
-        if (validateAccountInformation(userAccountInformation)) {
+        if (!validateAccountInformation(userAccountInformation)) {
             return;
         }
         model.setUserAccountInformation(userAccountInformation);
@@ -68,7 +70,7 @@ public class RegisterUserViewModel extends ViewModel {
     }
 
     private boolean validateAccountInformation(UserAccountInformation userAccountInformation) {
-        return !hasNickNameOnDataBank(userAccountInformation.getNickName()) ||
+        return !hasNickNameOnDataBank(userAccountInformation.getNickName()) &&
                 validatePassword(userAccountInformation.getPassword(), userAccountInformation.getConfirmPassword());
     }
 
@@ -97,9 +99,9 @@ public class RegisterUserViewModel extends ViewModel {
     }
 
     private boolean validateUserInformation(UserPersonalInformation information) {
-        return validateEmail(information.getEmail()) ||
-                validateName(information.getName()) ||
-                validateBornDate(information.getBornDate()) ||
+        return validateEmail(information.getEmail()) &&
+                validateName(information.getName()) &&
+                validateBornDate(information.getBornDate()) &&
                 validateCpfCnpj(information.getCpfCnpj(), information.getUserType());
     }
 
@@ -116,6 +118,7 @@ public class RegisterUserViewModel extends ViewModel {
         if (!validation) {
             error.postValue(ErrorMessages.CPF_CNPJ_ERROR);
         }
+        Log.i(TAG, "validateCpfCnpj: " + validation);
 
         return validation;
     }
@@ -125,6 +128,7 @@ public class RegisterUserViewModel extends ViewModel {
         if (!validation) {
             error.postValue(ErrorMessages.NAME_VERY_SHORT);
         }
+        Log.i(TAG, "validateName: " + validation);
         return validation;
     }
 
@@ -133,6 +137,7 @@ public class RegisterUserViewModel extends ViewModel {
         if (!validation) {
             error.postValue(ErrorMessages.EMAIL_INVALID);
         }
+        Log.i(TAG, "validateEmail: " + validation);
         return validation;
     }
 
@@ -142,7 +147,7 @@ public class RegisterUserViewModel extends ViewModel {
         if (!validation) {
             error.postValue(ErrorMessages.MINOR_EIGHTEEN_USER);
         }
-
+        Log.i(TAG, "validateBornDate: " + validation);
         return validation;
     }
 

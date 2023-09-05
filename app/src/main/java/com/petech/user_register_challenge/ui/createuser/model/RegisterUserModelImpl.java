@@ -41,7 +41,7 @@ public class RegisterUserModelImpl implements RegisterUserModel {
     public void setUserAccountInformation(UserAccountInformation accountInformation) {
         getUserSingleton()
                 .nickName(accountInformation.getNickName())
-                .password(accountInformation.getPassword());
+                .password(accountInformation.getPassword().hashCode());
     }
 
     @Override
@@ -56,4 +56,5 @@ public class RegisterUserModelImpl implements RegisterUserModel {
 
         return userBuilder;
     }
+
 }

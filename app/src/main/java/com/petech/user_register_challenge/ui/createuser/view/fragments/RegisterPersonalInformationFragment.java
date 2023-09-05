@@ -16,12 +16,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.petech.user_register_challenge.R;
 import com.petech.user_register_challenge.databinding.FragmentRegisterPersonalInformationBinding;
 import com.petech.user_register_challenge.ui.createuser.model.beans.UserPersonalInformation;
+import com.petech.user_register_challenge.ui.createuser.view.RegisterUserActivity;
 import com.petech.user_register_challenge.ui.createuser.viewmodel.RegisterUserViewModel;
 import com.petech.user_register_challenge.utils.ErrorMessages;
+import com.petech.user_register_challenge.utils.MaskEditUtil;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -55,10 +58,39 @@ public class RegisterPersonalInformationFragment extends Fragment {
         binding = FragmentRegisterPersonalInformationBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(RegisterUserViewModel.class);
 
+        defineIfIsCPForCNPJ();
         setupObservables();
         setupComponents();
 
         return binding.getRoot();
+    }
+
+    private void defineIfIsCPForCNPJ() {
+        Bundle extra = requireActivity().getIntent().getExtras();
+
+        if (extra != null) {
+            boolean isCpf = extra.getBoolean(RegisterUserActivity.IS_CPF);
+
+            if (isCpf) {
+                setupCpfField();
+            } else {
+                setupCnjpField();
+            }
+        }
+    }
+
+    private void setupCpfField() {
+        binding.textUserCpfCnpjInputLabel.setText(getString(R.string.cpf_label));
+        binding.inputTextCpfCnpjField.setHint(getString(R.string.cpf_example_hint));
+        binding.inputTextCpfCnpjField.addTextChangedListener(
+                MaskEditUtil.mask(binding.inputTextCpfCnpjField, MaskEditUtil.FORMAT_CPF));
+    }
+
+    private void setupCnjpField() {
+        binding.textUserCpfCnpjInputLabel.setText(R.string.cnpj_label);
+        binding.inputTextCpfCnpjField.setHint(R.string.cnpj_example_hint);
+        binding.inputTextCpfCnpjField.addTextChangedListener(
+                MaskEditUtil.mask(binding.inputTextCpfCnpjField, MaskEditUtil.FORMAT_CNPJ));
     }
 
     private void setupComponents() {
@@ -83,7 +115,9 @@ public class RegisterPersonalInformationFragment extends Fragment {
         viewModel.getError().observe(getViewLifecycleOwner(), it -> handleError(it));
 
         viewModel.getUserPersonalInformationSuccess().observe(getViewLifecycleOwner(), it -> {
-
+            if (it) {
+                Navigation.findNavController(requireView()).navigate(R.id.step_two_action);
+            }
         });
     }
 
@@ -99,12 +133,16 @@ public class RegisterPersonalInformationFragment extends Fragment {
         return information;
     }
 
-    private boolean getGender(){
+    private boolean getGender() {
         int radioButtonId = binding.radioGroupGender.getCheckedRadioButtonId();
         Log.i("RADIOBUTTON", "IsMan?" + (radioButtonId == R.id.radio_button_man));
         return radioButtonId == R.id.radio_button_man;
     }
+
     private LocalDate parseDate(String date) {
+        if (date.equals("")) {
+            return LocalDate.now();
+        }
         DateTimeFormatter formatters = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(date, formatters);
     }

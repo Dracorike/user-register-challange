@@ -9,5 +9,14 @@
         android:id="@+id/registerPersonalInformationFragment"
         android:name="com.petech.user_register_challenge.ui.createuser.view.fragments.RegisterPersonalInformationFragment"
         android:label="RegisterPersonalInformationFragment"
-        tools:layout="@layout/fragment_register_personal_information"/>
+        tools:layout="@layout/fragment_register_personal_information">
+        <action
+            android:id="@+id/step_two_action"
+            app:destination="@id/registerAccountInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerAccountInformationFragment"
+        android:name="com.petech.user_register_challenge.ui.createuser.view.fragments.RegisterAccountInformationFragment"
+        android:label="RegisterAccountInformationFragment"
+        tools:layout="@layout/fragment_register_account_information"/>
 </navigation>
